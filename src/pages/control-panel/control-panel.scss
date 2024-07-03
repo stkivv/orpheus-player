@@ -1,0 +1,44 @@
+.control-panel {
+  background: linear-gradient(#ecd249, #8d428e);
+  padding: 0px 10px 0px 10px;
+  color: #273b4a;
+
+  .wrapper {
+    display: grid;
+    grid-template-rows: 50px auto 50px;
+    height: 100vh;
+
+    .top {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .content {
+      display: grid;
+      grid-template-rows: 30px auto;
+      height: fit-content;
+      margin: auto;
+
+      &__title {
+        margin: auto;
+      }
+
+      &__buttons {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        margin: auto;
+
+        &__play,
+        &__back,
+        &__forward {
+          padding: 20px;
+        }
+      }
+    }
+
+    .bottom {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
