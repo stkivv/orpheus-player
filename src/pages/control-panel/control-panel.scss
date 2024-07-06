@@ -1,5 +1,5 @@
 .control-panel {
-  background: linear-gradient(#ecd249, #8d428e);
+  background: linear-gradient(to bottom, #582da7, #d76d77, #ffaf7b);
   padding: 0px 10px 0px 10px;
   color: #273b4a;
 
@@ -8,9 +8,16 @@
     grid-template-rows: 50px auto 50px;
     height: 100vh;
 
-    .top {
+    .top,
+    .bottom {
       margin-left: auto;
-      margin-right: auto;
+      padding: 10px;
+    }
+
+    .bottom {
+      svg {
+        padding-left: 15px;
+      }
     }
 
     .content {
@@ -33,12 +40,12 @@
         &__forward {
           padding: 20px;
         }
-      }
-    }
 
-    .bottom {
-      margin-left: auto;
-      margin-right: auto;
+        &__back,
+        &__forward {
+          margin-top: 7px;
+        }
+      }
     }
   }
 }
