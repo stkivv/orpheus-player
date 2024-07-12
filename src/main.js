@@ -1,6 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("node:path");
-const fs = require("fs");
+const fs = require("fs").promises;
+const config = require("dotenv");
+config.config();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -27,7 +29,7 @@ const createWindow = () => {
   }
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -55,7 +57,11 @@ app.on("window-all-closed", () => {
 });
 
 ipcMain.handle("get/songs", async (event, args) => {
-  console.log("song data requested");
-  fs.readFile("C:/test.txt", (error, data) => {});
-  return "All good amigo";
+  const dir = process.env.SONG_DIR;
+  try {
+    return await fs.readdir(dir);;
+  } catch (error) {
+    console.log("error: " + error.message);
+    return [];
+  }
 });

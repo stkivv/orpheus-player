@@ -1,13 +1,20 @@
 <script setup>
-async function getData() {
-  console.log("getting data...");
-  console.log(await window.api.getSongs());
-}
+import { onMounted, ref } from "vue";
+
+let songs = ref([]);
+
+const loadSongs = async () => {
+  songs.value = await window.api.getSongs();
+};
+
+onMounted(() => {
+  loadSongs();
+});
 </script>
 
 <template>
   <div class="songlist">
-    <button @click="getData">Get Data</button>
+    <div v-for="song in songs" class="song-card">{{ song }}</div>
   </div>
 </template>
 
