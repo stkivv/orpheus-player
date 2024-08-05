@@ -1,12 +1,10 @@
 <script setup>
-import controlPanel from "../control-panel/control-panel.vue";
-import songList from "../song-list/song-list.vue";
+import songsPage from "../songs-page/songs-page.vue";
 </script>
 
 <template>
   <div class="main">
-    <songList />
-    <controlPanel />
+     <songsPage />
   </div>
 </template>
 

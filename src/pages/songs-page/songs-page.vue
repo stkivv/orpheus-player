@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 
-let audioPlayer = null as HTMLMediaElement;
-let isPlaying = ref(false);
+interface Song {
+  name: string;
+  data: string;
+}
 
-const updateIsPlaying = () => {
-  if (audioPlayer) {
-    isPlaying.value = !audioPlayer.paused;
-  }
-};
+let songs = ref([] as Song[]);
+const isPlaying = ref(false);
+let audioPlayer: HTMLMediaElement | null = null;
 
 onMounted(() => {
+  loadSongs();
   audioPlayer = document.getElementById("audioPlayer") as HTMLMediaElement;
   if (audioPlayer) {
     isPlaying.value = !audioPlayer.paused;
@@ -19,6 +20,32 @@ onMounted(() => {
   }
 });
 
+const loadSongs = async () => {
+  songs.value = await window.api.getSongs();
+};
+
+const playSong = async (buffer) => {
+  const blob = new Blob([buffer], { type: "audio/mpeg" });
+  const url = URL.createObjectURL(blob);
+
+  if (audioPlayer) {
+    const audioSource = document.getElementById("audioSource") as HTMLSourceElement;
+    audioSource.src = url;
+    audioPlayer.load();
+    await audioPlayer.play();
+
+    audioPlayer.onloadeddata = () => {
+      URL.revokeObjectURL(url);
+    };
+  }
+};
+
+const updateIsPlaying = () => {
+  if (audioPlayer) {
+    isPlaying.value = !audioPlayer.paused;
+  }
+};
+
 const pauseUnpause = () => {
   if (!audioPlayer) return;
   audioPlayer.paused ? audioPlayer.play() : audioPlayer.pause();
@@ -26,6 +53,14 @@ const pauseUnpause = () => {
 </script>
 
 <template>
+  <audio id="audioPlayer">
+    <source id="audioSource" src="" type="audio/mpeg" />
+  </audio>
+  <div class="songlist">
+    <div v-for="song in songs" class="song-card" @click="playSong(song.data)">
+      {{ song.name }}
+    </div>
+  </div>
   <div class="control-panel">
     <div class="wrapper">
       <div class="top">
@@ -142,5 +177,6 @@ const pauseUnpause = () => {
 </template>
 
 <style>
+@import "./song-list.scss";
 @import "./control-panel.scss";
 </style>
