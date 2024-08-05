@@ -3,6 +3,7 @@ const path = require("node:path");
 const fs = require("fs").promises;
 const config = require("dotenv");
 config.config();
+const url = require("url");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -29,7 +30,7 @@ const createWindow = () => {
   }
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -59,7 +60,13 @@ app.on("window-all-closed", () => {
 ipcMain.handle("get/songs", async (event, args) => {
   const dir = process.env.SONG_DIR;
   try {
-    return await fs.readdir(dir);;
+    const fileNames = await fs.readdir(dir);
+    const result = await Promise.all(fileNames.map(async (file) => {
+      const filePath = path.join(dir, file);
+      const data = await fs.readFile(filePath);
+      return { name: file, data };
+    }));
+    return result;
   } catch (error) {
     console.log("error: " + error.message);
     return [];
