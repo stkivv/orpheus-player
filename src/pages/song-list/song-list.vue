@@ -1,18 +1,27 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from "vue";
 
-let songs = ref([]);
+interface Song {
+  name: string;
+  data: string;
+}
+
+let songs = ref([] as Song[]);
 
 const loadSongs = async () => {
   songs.value = await window.api.getSongs();
 };
 
 const playSong = async (buffer) => {
-  const blob = new Blob([buffer], { type: 'audio/mpeg' });
+  const blob = new Blob([buffer], { type: "audio/mpeg" });
   const url = URL.createObjectURL(blob);
-  
-  const audioPlayer = document.getElementById("audioPlayer");
-  const audioSource = document.getElementById("audioSource");
+
+  const audioPlayer = document.getElementById(
+    "audioPlayer"
+  ) as HTMLMediaElement;
+  const audioSource = document.getElementById(
+    "audioSource"
+  ) as HTMLSourceElement;
   audioSource.src = url;
   await audioPlayer.load();
   await audioPlayer.play();

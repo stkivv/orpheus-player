@@ -1,4 +1,29 @@
-<script setup></script>
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+
+let audioPlayer = null as HTMLMediaElement;
+let isPlaying = ref(false);
+
+const updateIsPlaying = () => {
+  if (audioPlayer) {
+    isPlaying.value = !audioPlayer.paused;
+  }
+};
+
+onMounted(() => {
+  audioPlayer = document.getElementById("audioPlayer") as HTMLMediaElement;
+  if (audioPlayer) {
+    isPlaying.value = !audioPlayer.paused;
+    audioPlayer.addEventListener("play", updateIsPlaying);
+    audioPlayer.addEventListener("pause", updateIsPlaying);
+  }
+});
+
+const pauseUnpause = () => {
+  if (!audioPlayer) return;
+  audioPlayer.paused ? audioPlayer.play() : audioPlayer.pause();
+};
+</script>
 
 <template>
   <div class="control-panel">
@@ -34,7 +59,7 @@
               />
             </svg>
           </div>
-          <div class="content__buttons__play">
+          <div class="content__buttons__play" @click="pauseUnpause">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="46"
@@ -44,6 +69,11 @@
               viewBox="0 0 16 16"
             >
               <path
+                v-if="isPlaying"
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5m3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5"
+              />
+              <path
+                v-else
                 d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814z"
               />
             </svg>
