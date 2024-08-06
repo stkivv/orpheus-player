@@ -12,11 +12,23 @@
     .bottom {
       margin-left: auto;
       padding: 10px;
-    }
 
-    .bottom {
-      svg {
+      .loop-enabled,
+      .loop-disabled,
+      .shuffle-enabled,
+      .shuffle-disabled,
+      .settings-btn {
         padding-left: 15px;
+
+        &:hover {
+          cursor: pointer;
+          color: #9a69f5;
+        }
+      }
+
+      .loop-enabled,
+      .shuffle-enabled {
+        color: white;
       }
     }
 
@@ -28,6 +40,11 @@
 
       &__title {
         margin: auto;
+        width: 200px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-align: center;
       }
 
       &__buttons {
@@ -42,6 +59,7 @@
 
           &:hover {
             cursor: pointer;
+            color: #9a69f5;
           }
         }
 
@@ -49,6 +67,10 @@
         &__forward {
           margin-top: 7px;
         }
+      }
+
+      &__elapsed {
+        text-align: center;
       }
     }
   }
