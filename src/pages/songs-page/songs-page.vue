@@ -15,6 +15,7 @@ let audioPlayer: HTMLMediaElement | null = null;
 const currentTime = ref<string>("0:00");
 const currentDuration = ref<string>("0:00");
 const songHistory = [] as Song[];
+const barFilledPercent = ref(0);
 
 onMounted(() => {
   loadSongs();
@@ -71,12 +72,20 @@ const pauseUnpause = () => {
 const updateTime = () => {
   if (!audioPlayer) return;
   currentTime.value = formatSecondsToMinutes(audioPlayer.currentTime);
+  barFilledPercent.value = getBarFilledPercentage(
+    audioPlayer.currentTime,
+    audioPlayer.duration
+  );
 };
 
 const formatSecondsToMinutes = (seconds: number) => {
   const minutesString = (seconds / 60).toFixed(0);
   const secondsString = (seconds % 60).toFixed(0);
   return minutesString + ":" + secondsString.padStart(2, "0");
+};
+
+const getBarFilledPercentage = (current: number, total: number) => {
+  return (current / total) * 100;
 };
 
 const skipBack = () => {
@@ -111,12 +120,12 @@ const skipForward = () => {
 };
 
 const toggleShuffle = () => {
-  shuffleEnabled.value = !shuffleEnabled.value
-}
+  shuffleEnabled.value = !shuffleEnabled.value;
+};
 
 const toggleLoop = () => {
-  loopEnabled.value = !loopEnabled.value
-}
+  loopEnabled.value = !loopEnabled.value;
+};
 </script>
 
 <template>
@@ -131,7 +140,13 @@ const toggleLoop = () => {
   <div class="control-panel">
     <div class="wrapper">
       <div class="top">
-        <svg class="settings-btn" fill="currentColor" width="28" height="28" viewBox="0 0 16 16">
+        <svg
+          class="settings-btn"
+          fill="currentColor"
+          width="28"
+          height="28"
+          viewBox="0 0 16 16"
+        >
           <use href="./icons.svg#settings"></use>
         </svg>
       </div>
@@ -158,20 +173,59 @@ const toggleLoop = () => {
           </div>
         </div>
         <div class="content__elapsed">
-          {{ currentTime }} / {{ currentDuration }}
+          {{ currentTime }}
+          <div class="content__elapsed__bar">
+            <div
+              class="content__elapsed__bar__filled"
+              :style="{ width: barFilledPercent + '%' }"
+            ></div>
+          </div>
+          {{ currentDuration }}
         </div>
       </div>
       <div class="bottom">
-        <svg v-if="shuffleEnabled" @click="toggleShuffle" class="shuffle-enabled" fill="currentColor" width="28" height="28" viewBox="0 0 16 16">
+        <svg
+          v-if="shuffleEnabled"
+          @click="toggleShuffle"
+          class="shuffle-enabled"
+          fill="currentColor"
+          width="28"
+          height="28"
+          viewBox="0 0 16 16"
+        >
           <use href="./icons.svg#shuffle"></use>
         </svg>
-        <svg v-else @click="toggleShuffle" class="shuffle-disabled" fill="currentColor" width="28" height="28" viewBox="0 0 16 16">
+        <svg
+          v-else
+          @click="toggleShuffle"
+          class="shuffle-disabled"
+          fill="currentColor"
+          width="28"
+          height="28"
+          viewBox="0 0 16 16"
+        >
           <use href="./icons.svg#shuffle"></use>
         </svg>
-        <svg v-if="loopEnabled" @click="toggleLoop" class="loop-enabled" fill="currentColor" width="28" height="28" viewBox="0 0 16 16">
+        <svg
+          v-if="loopEnabled"
+          @click="toggleLoop"
+          class="loop-enabled"
+          fill="currentColor"
+          width="28"
+          height="28"
+          viewBox="0 0 16 16"
+        >
           <use href="./icons.svg#loop"></use>
         </svg>
-        <svg v-else @click="toggleLoop" class="loop-disabled" fill="currentColor" width="28" height="28" viewBox="0 0 16 16">
+        <svg
+          v-else
+          @click="toggleLoop"
+          class="loop-disabled"
+          fill="currentColor"
+          width="28"
+          height="28"
+          viewBox="0 0 16 16"
+        >
           <use href="./icons.svg#loop"></use>
         </svg>
       </div>

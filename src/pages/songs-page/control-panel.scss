@@ -71,6 +71,22 @@
 
       &__elapsed {
         text-align: center;
+        flex-direction: row;
+        display: flex;
+
+        &__bar {
+          width: 165px;
+          height: 10px;
+          margin: 7px 10px 0px 10px;
+          border-radius: 15px;
+          background-color: #273b4a;
+
+          &__filled {
+            background-color: #9a69f5;
+            height: inherit;
+            border-radius: inherit;
+          }
+        }
       }
     }
   }
