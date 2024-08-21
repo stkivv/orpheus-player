@@ -8,4 +8,5 @@ import Main from './main/main.vue'
 
 <style>
 @import "app.css";
+@import "colors.css";
 </style>

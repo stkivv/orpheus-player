@@ -1,7 +1,6 @@
 .control-panel {
-  background: linear-gradient(to bottom, #582da7, #d76d77, #ffaf7b);
+  background: var(--control-panel-bg);
   padding: 0px 10px 0px 10px;
-  color: #273b4a;
 
   .wrapper {
     display: grid;
@@ -19,16 +18,17 @@
       .shuffle-disabled,
       .settings-btn {
         padding-left: 15px;
+        color: var(--control-panel-icon);
 
         &:hover {
           cursor: pointer;
-          color: #9a69f5;
+          color: var(--control-panel-icon-highlight);
         }
       }
 
       .loop-enabled,
       .shuffle-enabled {
-        color: white;
+        color: var(--control-panel-button-toggle-enabled);
       }
     }
 
@@ -37,6 +37,7 @@
       grid-template-rows: 30px auto;
       height: fit-content;
       margin: auto;
+      color: var(--control-panel-font-col);
 
       &__title {
         margin: auto;
@@ -51,6 +52,7 @@
         display: grid;
         grid-template-columns: auto auto auto;
         margin: auto;
+        color: var(--control-panel-icon);
 
         &__play,
         &__back,
@@ -59,7 +61,7 @@
 
           &:hover {
             cursor: pointer;
-            color: #9a69f5;
+            color: var(--control-panel-icon-highlight);
           }
         }
 
@@ -79,10 +81,10 @@
           height: 10px;
           margin: 7px 10px 0px 10px;
           border-radius: 15px;
-          background-color: #273b4a;
+          background-color: var(--control-panel-timeline-bg);
 
           &__filled {
-            background-color: #9a69f5;
+            background-color: var(--control-panel-timeline-fill);
             height: inherit;
             border-radius: inherit;
           }
