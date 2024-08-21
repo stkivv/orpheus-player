@@ -140,15 +140,17 @@ const toggleLoop = () => {
   <div class="control-panel">
     <div class="wrapper">
       <div class="top">
-        <svg
-          class="settings-btn"
-          fill="currentColor"
-          width="28"
-          height="28"
-          viewBox="0 0 16 16"
-        >
-          <use href="./icons.svg#settings"></use>
-        </svg>
+        <RouterLink to="/settings">
+          <svg
+            class="settings-btn"
+            fill="currentColor"
+            width="28"
+            height="28"
+            viewBox="0 0 16 16"
+          >
+            <use href="./icons.svg#settings"></use>
+          </svg>
+        </RouterLink>
       </div>
       <div class="content">
         <div class="content__title">

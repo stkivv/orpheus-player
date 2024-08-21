@@ -1,10 +1,11 @@
 <script setup>
 import songsPage from "../songs-page/songs-page.vue";
+import settings from "../settings-page/settings.vue";
 </script>
 
 <template>
   <div class="main">
-     <songsPage />
+    <RouterView></RouterView>
   </div>
 </template>
 
