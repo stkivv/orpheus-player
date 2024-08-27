@@ -1,6 +1,7 @@
-<script setup>
-import songsPage from "../songs-page/songs-page.vue";
-import settings from "../settings-page/settings.vue";
+<script setup lang="ts">
+import { loadUserPreferences } from "../../helpers/functions";
+
+loadUserPreferences();
 </script>
 
 <template>

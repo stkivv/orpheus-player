@@ -1,0 +1,51 @@
+.settings {
+  margin-left: 20px;
+  width: 100%;
+  .color-input-group {
+    .color-input {
+      display: grid;
+      grid-template-columns: auto 30px 150px;
+      margin: 15px;
+
+      span {
+        margin-right: 25px;
+        text-wrap: nowrap;
+      }
+
+      .color-preview {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        border: 1px solid black;
+      }
+
+      input {
+        height: 20px;
+      }
+    }
+  }
+
+  .button {
+    margin: 10px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    float: right;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .cancel {
+    background-color: rgb(182, 174, 174);
+  }
+  .confirm {
+    background-color: rgb(97, 113, 218);
+  }
+}

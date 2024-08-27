@@ -14,6 +14,10 @@ body {
   width: 100%;
 }
 
+main {
+  background-color: var(--song-list-bg);
+}
+
 ::-webkit-scrollbar {
   height: 12px;
   width: 12px;

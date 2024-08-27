@@ -38,9 +38,7 @@ const playSong = async (song: Song, addToHistory = true) => {
   const url = URL.createObjectURL(blob);
 
   if (audioPlayer) {
-    const audioSource = document.getElementById(
-      "audioSource"
-    ) as HTMLSourceElement;
+    const audioSource = document.getElementById("audioSource") as HTMLSourceElement;
     audioSource.src = url;
     audioPlayer.load();
     await audioPlayer.play();
@@ -72,10 +70,7 @@ const pauseUnpause = () => {
 const updateTime = () => {
   if (!audioPlayer) return;
   currentTime.value = formatSecondsToMinutes(audioPlayer.currentTime);
-  barFilledPercent.value = getBarFilledPercentage(
-    audioPlayer.currentTime,
-    audioPlayer.duration
-  );
+  barFilledPercent.value = getBarFilledPercentage(audioPlayer.currentTime, audioPlayer.duration);
 };
 
 const formatSecondsToMinutes = (seconds: number) => {
@@ -90,9 +85,7 @@ const getBarFilledPercentage = (current: number, total: number) => {
 
 const skipBack = () => {
   songHistory.pop();
-  songHistory.length >= 1
-    ? playSong(songHistory[songHistory.length - 1], false)
-    : skipForward();
+  songHistory.length >= 1 ? playSong(songHistory[songHistory.length - 1], false) : skipForward();
 };
 
 const skipForward = () => {
@@ -141,13 +134,7 @@ const toggleLoop = () => {
     <div class="wrapper">
       <div class="top">
         <RouterLink to="/settings">
-          <svg
-            class="settings-btn"
-            fill="currentColor"
-            width="28"
-            height="28"
-            viewBox="0 0 16 16"
-          >
+          <svg class="settings-btn" fill="currentColor" width="28" height="28" viewBox="0 0 16 16">
             <use href="./icons.svg#settings"></use>
           </svg>
         </RouterLink>
@@ -177,10 +164,7 @@ const toggleLoop = () => {
         <div class="content__elapsed">
           {{ currentTime }}
           <div class="content__elapsed__bar">
-            <div
-              class="content__elapsed__bar__filled"
-              :style="{ width: barFilledPercent + '%' }"
-            ></div>
+            <div class="content__elapsed__bar__filled" :style="{ width: barFilledPercent + '%' }"></div>
           </div>
           {{ currentDuration }}
         </div>
