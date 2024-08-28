@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { getFileDirPath } from "../../helpers/functions";
 
 interface Song {
   name: string;
@@ -29,8 +30,9 @@ onMounted(() => {
 });
 
 const loadSongs = async () => {
+  const path = getFileDirPath();
   //@ts-ignore
-  songs.value = await window.api.getSongs();
+  songs.value = await window.api.getSongs(path);
 };
 
 const playSong = async (song: Song, addToHistory = true) => {
@@ -126,6 +128,7 @@ const toggleLoop = () => {
     <source id="audioSource" src="" type="audio/mpeg" />
   </audio>
   <div class="songlist">
+    <div class="empty-warning" v-if="songs.length == 0">No files found at current source :(</div>
     <div v-for="song in songs" class="song-card" @click="playSong(song)">
       {{ song.name }}
     </div>

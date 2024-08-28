@@ -1,6 +1,53 @@
 .settings {
   margin-left: 20px;
   width: 100%;
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
+  .close-button {
+    float: right;
+    padding: 10px 16px 10px 16px;
+    margin: 10px;
+    border-radius: 24px;
+    background-color: var(--song-list-bg-highlight);
+    text-align: center;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .source-input {
+    margin: 15px;
+
+    #file-source-field {
+      width: 100%;
+      background-color: white;
+      color: black;
+      padding: 5px 10px 5px 10px;
+      border-radius: 10px;
+
+      &:hover {
+        cursor: default;
+      }
+    }
+
+    #file-source-button {
+      margin-top: 10px;
+      background-color: rgb(97, 113, 218);
+      padding: 10px;
+      border-radius: 10px;
+      display: inline-block;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
   .color-input-group {
     .color-input {
       display: grid;
@@ -32,11 +79,6 @@
     color: white;
     text-align: center;
     float: right;
-
-    a {
-      color: white;
-      text-decoration: none;
-    }
 
     &:hover {
       cursor: pointer;

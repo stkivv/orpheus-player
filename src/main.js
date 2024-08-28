@@ -1,9 +1,8 @@
-const { app, BrowserWindow, ipcMain, ipcRenderer } = require("electron");
+const { app, BrowserWindow, ipcMain, ipcRenderer, dialog } = require("electron");
 const path = require("node:path");
 const fs = require("fs").promises;
 const config = require("dotenv");
 config.config();
-const url = require("url");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -55,8 +54,8 @@ app.on("window-all-closed", () => {
   }
 });
 
-ipcMain.handle("get/songs", async (event, args) => {
-  const dir = process.env.SONG_DIR;
+ipcMain.handle("get/songs", async (event, dir) => {
+  if (dir == undefined) return [];
   try {
     const fileNames = await fs.readdir(dir);
     const result = await Promise.all(
@@ -71,4 +70,9 @@ ipcMain.handle("get/songs", async (event, args) => {
     console.log("error: " + error.message);
     return [];
   }
+});
+
+ipcMain.handle("get/dirpath", async (event, args) => {
+  const paths = await dialog.showOpenDialog({ properties: ["openDirectory"] });
+  return paths.filePaths[0] ?? undefined
 });

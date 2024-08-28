@@ -3,6 +3,11 @@
   overflow-y: scroll;
   overflow-x: hidden;
 
+  .empty-warning {
+    text-align: center;
+    margin-top: 20px;
+  }
+
   .song-card {
     padding: 10px;
     margin: 10px;

@@ -2,14 +2,25 @@ import UserPreferences from "../interfaces/user-preferences";
 import { styleMappings } from "./style-mappings";
 
 export const loadUserPreferences = () => {
+  const preferences = getPreferencesFromLocalStorage();
+  if (preferences == undefined) return;
+  const songListOptions = preferences?.colors?.songList;
+  const controlPanelOptions = preferences?.colors?.controlPanel;
+
+  applyStyles(songListOptions, styleMappings.colors.songList);
+  applyStyles(controlPanelOptions, styleMappings.colors.controlPanel);
+};
+
+export const getFileDirPath = () => {
+  const preferences = getPreferencesFromLocalStorage();
+  if (preferences == undefined) return;
+  return preferences.fileDirPath;
+};
+
+const getPreferencesFromLocalStorage = () => {
   const savedPreferences = localStorage.getItem("userPreferences");
   if (savedPreferences) {
-    const preferences = JSON.parse(savedPreferences) as UserPreferences;
-    const songListOptions = preferences?.colors?.songList;
-    const controlPanelOptions = preferences?.colors?.controlPanel;
-
-    applyStyles(songListOptions, styleMappings.colors.songList);
-    applyStyles(controlPanelOptions, styleMappings.colors.controlPanel);
+    return JSON.parse(savedPreferences) as UserPreferences;
   }
 };
 
