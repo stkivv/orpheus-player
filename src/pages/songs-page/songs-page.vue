@@ -8,6 +8,7 @@ interface Song {
 }
 
 let songs = ref([] as Song[]);
+let isLoading = true;
 const isPlaying = ref(false);
 const shuffleEnabled = ref(false);
 const loopEnabled = ref(false);
@@ -33,6 +34,7 @@ const loadSongs = async () => {
   const path = getFileDirPath();
   //@ts-ignore
   songs.value = await window.api.getSongs(path);
+  isLoading = false;
 };
 
 const playSong = async (song: Song, addToHistory = true) => {
@@ -128,9 +130,10 @@ const toggleLoop = () => {
     <source id="audioSource" src="" type="audio/mpeg" />
   </audio>
   <div class="songlist">
-    <div class="empty-warning" v-if="songs.length == 0">No files found at current source :(</div>
-    <div v-for="song in songs" class="song-card" @click="playSong(song)">
-      {{ song.name }}
+    <div class="empty-warning" v-if="songs.length == 0 && !isLoading">No files found at current source :(</div>
+    <div class="loader-wrapper" v-if="isLoading"><span class="loader"></span></div>
+    <div v-for="(song, index) in songs" class="song-card" @click="playSong(song)">
+      <span class="song-index">{{ index + 1 + "." }}</span> <span class="song-label">{{ song.name }}</span>
     </div>
   </div>
   <div class="control-panel">

@@ -8,13 +8,47 @@
     margin-top: 20px;
   }
 
+  .loader-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    .loader {
+      width: 48px;
+      height: 48px;
+      border: 5px solid #fff;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+
   .song-card {
     padding: 10px;
     margin: 10px;
-    min-height: 50px;
+    min-height: 40px;
     border-radius: 15px;
-    border: 1px solid transparent;
-    text-align: center;
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: 30px auto;
+
+    .song-index,
+    .song-label {
+      display: flex;
+      align-items: center;
+    }
 
     &:hover {
       background-color: var(--song-list-bg-highlight);

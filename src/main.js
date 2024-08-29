@@ -14,10 +14,13 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    title: "Orpheus Player",
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
   });
+
+  mainWindow.removeMenu();
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
@@ -27,7 +30,7 @@ const createWindow = () => {
   }
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -74,5 +77,5 @@ ipcMain.handle("get/songs", async (event, dir) => {
 
 ipcMain.handle("get/dirpath", async (event, args) => {
   const paths = await dialog.showOpenDialog({ properties: ["openDirectory"] });
-  return paths.filePaths[0] ?? undefined
+  return paths.filePaths[0] ?? undefined;
 });
