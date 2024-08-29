@@ -72,22 +72,37 @@
       }
 
       &__elapsed {
-        text-align: center;
         flex-direction: row;
         display: flex;
+        align-items: center;
+
 
         &__bar {
           width: 165px;
-          height: 10px;
-          margin: 7px 10px 0px 10px;
+          height: 15px;
+          margin: 0px 10px 0px 10px;
           border-radius: 15px;
           background-color: var(--control-panel-timeline-bg);
+
+          &:hover {
+            cursor: pointer;
+          }
 
           &__filled {
             background-color: var(--control-panel-timeline-fill);
             height: inherit;
             border-radius: inherit;
           }
+        }
+
+        .tooltip {
+          position: absolute;
+          background-color: #333;
+          color: #fff;
+          padding: 5px;
+          border-radius: 3px;
+          font-size: 12px;
+          pointer-events: none;
         }
       }
     }

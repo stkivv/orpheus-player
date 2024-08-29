@@ -19,6 +19,10 @@ const currentDuration = ref<string>("0:00");
 const songHistory = [] as Song[];
 const barFilledPercent = ref(0);
 
+const tooltipTime = ref<string>("0:00");
+const tooltipVisible = ref(false);
+const tooltipPosition = ref({ x: 0, y: 0 });
+
 onMounted(() => {
   loadSongs();
   audioPlayer = document.getElementById("audioPlayer") as HTMLMediaElement;
@@ -78,7 +82,8 @@ const updateTime = () => {
 };
 
 const formatSecondsToMinutes = (seconds: number) => {
-  const minutesString = (seconds / 60).toFixed(0);
+  if (seconds < 0) return "0:00";
+  const minutesString = Math.floor(seconds / 60).toFixed(0);
   const secondsString = (seconds % 60).toFixed(0);
   return minutesString + ":" + secondsString.padStart(2, "0");
 };
@@ -102,7 +107,7 @@ const skipForward = () => {
     const randIndex = Math.floor(Math.random() * songs.value.length);
     playSong(songs.value[randIndex]);
   } else {
-    let currentIndex = -1; // will pick next song in list, so -1 will give first song
+    let currentIndex = -1;
     songs.value.forEach((song, index) => {
       if (song == currentSong.value) {
         currentIndex = index;
@@ -122,6 +127,32 @@ const toggleShuffle = () => {
 
 const toggleLoop = () => {
   loopEnabled.value = !loopEnabled.value;
+};
+
+const handleTimeLineHover = (event: MouseEvent) => {
+  if (!audioPlayer) return;
+  const timeInSeconds = getTimeInSeconds(event);
+  tooltipTime.value = formatSecondsToMinutes(timeInSeconds ? timeInSeconds : 0);
+  tooltipPosition.value = { x: event.clientX - 15, y: event.clientY - 25 };
+  tooltipVisible.value = true;
+};
+
+const hideTooltip = () => {
+  tooltipVisible.value = false;
+};
+
+const handleTimeLineClick = (event: MouseEvent) => {
+  if (!audioPlayer) return;
+  audioPlayer.currentTime = getTimeInSeconds(event);
+};
+
+const getTimeInSeconds = (event: MouseEvent) => {
+  if (!audioPlayer) return 0;
+  const bar = event.currentTarget as HTMLElement;
+  const rect = bar.getBoundingClientRect();
+  const mouseX = event.clientX - rect.left;
+  const percent = mouseX / rect.width;
+  return percent * audioPlayer.duration;
 };
 </script>
 
@@ -169,10 +200,25 @@ const toggleLoop = () => {
         </div>
         <div class="content__elapsed">
           {{ currentTime }}
-          <div class="content__elapsed__bar">
+          <div
+            class="content__elapsed__bar"
+            @mousemove="handleTimeLineHover"
+            @mouseleave="hideTooltip"
+            @click="handleTimeLineClick"
+          >
             <div class="content__elapsed__bar__filled" :style="{ width: barFilledPercent + '%' }"></div>
           </div>
           {{ currentDuration }}
+          <div
+            v-if="tooltipVisible"
+            class="tooltip"
+            :style="{
+              left: tooltipPosition.x + 'px',
+              top: tooltipPosition.y + 'px',
+            }"
+          >
+            {{ tooltipTime }}
+          </div>
         </div>
       </div>
       <div class="bottom">
