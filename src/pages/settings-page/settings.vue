@@ -3,6 +3,7 @@ import { ref } from "vue";
 import UserPreferences from "../../interfaces/user-preferences";
 import { getFileDirPath, loadUserPreferences } from "../../helpers/functions";
 import { styleMappings } from "../../helpers/style-mappings";
+import { autumnTheme, defaultTheme, midnightTheme, navyTheme } from "../../helpers/color-themes";
 
 const root = document.documentElement;
 const rootStyles = getComputedStyle(root);
@@ -42,6 +43,25 @@ const openDirectoryDialog = async () => {
 const saveUserPreferences = () => {
   localStorage.setItem("userPreferences", JSON.stringify(preferences.value));
 };
+
+const applyColorTheme = (name: string) => {
+  switch (name) {
+    case "default":
+      preferences.value.colors = structuredClone(defaultTheme.colors);
+      break;
+    case "midnight":
+      preferences.value.colors = structuredClone(midnightTheme.colors);
+      break;
+    case "autumn":
+      preferences.value.colors = structuredClone(autumnTheme.colors);
+      break;
+    case "navy":
+      preferences.value.colors = structuredClone(navyTheme.colors);
+      break;
+    default:
+      break;
+  }
+};
 </script>
 
 <template>
@@ -55,6 +75,11 @@ const saveUserPreferences = () => {
       <div id="file-source-button" @click="openDirectoryDialog">Choose directory</div>
     </div>
     <h2>Colors</h2>
+    <h4>Presets</h4>
+    <div class="color-preset" @click="applyColorTheme('default')">Default</div>
+    <div class="color-preset" @click="applyColorTheme('midnight')">Midnight</div>
+    <div class="color-preset" @click="applyColorTheme('autumn')">Autumn</div>
+    <div class="color-preset" @click="applyColorTheme('navy')">Navy</div>
     <h4>Main colors</h4>
     <div class="color-input-group">
       <div class="color-input" id="bg-color-picker">
@@ -124,6 +149,7 @@ const saveUserPreferences = () => {
         () => {
           saveUserPreferences();
           loadUserPreferences();
+          //@ts-ignore
           this.$router.push('/');
         }
       "

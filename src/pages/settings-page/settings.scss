@@ -49,6 +49,18 @@
     }
   }
 
+  .color-preset {
+    padding: 10px;
+    background-color: var(--song-list-bg-highlight);
+    display: inline-block;
+    margin: 5px;
+    border-radius: 6px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   .color-input-group {
     .color-input {
       display: grid;
