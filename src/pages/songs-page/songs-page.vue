@@ -9,7 +9,6 @@ interface Song {
 
 let songs = ref([] as Song[]);
 let isLoading = true;
-const isPlaying = ref(false);
 const shuffleEnabled = ref(false);
 const loopEnabled = ref(false);
 const currentSong = ref<null | Song>(null);
@@ -27,10 +26,8 @@ onMounted(() => {
   loadSongs();
   audioPlayer = document.getElementById("audioPlayer") as HTMLMediaElement;
   if (audioPlayer) {
-    isPlaying.value = !audioPlayer.paused;
-    audioPlayer.addEventListener("play", updateIsPlaying);
-    audioPlayer.addEventListener("pause", updateIsPlaying);
     audioPlayer.addEventListener("timeupdate", updateTime);
+    audioPlayer.addEventListener("ended", skipForward);
   }
 });
 
@@ -38,36 +35,34 @@ const loadSongs = async () => {
   const path = getFileDirPath();
   //@ts-ignore
   songs.value = await window.api.getSongs(path);
+  songs.value.forEach((s) => {
+    if (s.name.slice(-4) == ".mp3") {
+      s.name = s.name.substring(0, s.name.length - 4);
+    }
+  });
   isLoading = false;
 };
 
 const playSong = async (song: Song, addToHistory = true) => {
+  if (!audioPlayer) return;
   const blob = new Blob([song.data], { type: "audio/mpeg" });
   const url = URL.createObjectURL(blob);
 
-  if (audioPlayer) {
-    const audioSource = document.getElementById("audioSource") as HTMLSourceElement;
-    audioSource.src = url;
-    audioPlayer.load();
-    await audioPlayer.play();
+  const audioSource = document.getElementById("audioSource") as HTMLSourceElement;
+  audioSource.src = url;
+  audioPlayer.load();
+  await audioPlayer.play();
 
-    currentDuration.value = formatSecondsToMinutes(audioPlayer.duration);
-    if (addToHistory && currentSong.value !== song) {
-      songHistory.push(song);
-    }
-
-    audioPlayer.onloadeddata = () => {
-      URL.revokeObjectURL(url);
-    };
-
-    currentSong.value = song;
+  currentDuration.value = formatSecondsToMinutes(audioPlayer.duration);
+  if (addToHistory && currentSong.value !== song) {
+    songHistory.push(song);
   }
-};
 
-const updateIsPlaying = () => {
-  if (audioPlayer) {
-    isPlaying.value = !audioPlayer.paused;
-  }
+  audioPlayer.onloadeddata = () => {
+    URL.revokeObjectURL(url);
+  };
+
+  currentSong.value = song;
 };
 
 const pauseUnpause = () => {
@@ -99,26 +94,28 @@ const skipBack = () => {
 
 const skipForward = () => {
   if (!audioPlayer || songs.value.length === 0) return;
+  //loop
   if (loopEnabled.value && currentSong.value) {
     playSong(currentSong.value, false);
     return;
   }
+  //shuffle
   if (shuffleEnabled.value) {
     const randIndex = Math.floor(Math.random() * songs.value.length);
     playSong(songs.value[randIndex]);
-  } else {
-    let currentIndex = -1;
-    songs.value.forEach((song, index) => {
-      if (song == currentSong.value) {
-        currentIndex = index;
-      }
-    });
-    if (currentIndex + 1 > songs.value.length - 1) {
-      playSong(songs.value[0]);
-    } else {
-      playSong(songs.value[currentIndex + 1]);
-    }
+    return;
   }
+  //no loop no shuffle
+  if (!currentSong.value) {
+    playSong(songs.value[0]);
+    return;
+  }
+  const index = songs.value.findIndex((song) => song === currentSong.value);
+  if (index + 1 > songs.value.length - 1) {
+    playSong(songs.value[0]);
+    return;
+  }
+  playSong(songs.value[index + 1]);
 };
 
 const toggleShuffle = () => {
@@ -188,7 +185,7 @@ const getTimeInSeconds = (event: MouseEvent) => {
           </div>
           <div class="content__buttons__play" @click="pauseUnpause">
             <svg fill="currentColor" width="46" height="46" viewBox="0 0 16 16">
-              <use v-if="isPlaying" href="./icons.svg#pause"></use>
+              <use v-if="audioPlayer && !audioPlayer.paused" href="./icons.svg#pause"></use>
               <use v-else href="./icons.svg#play"></use>
             </svg>
           </div>
