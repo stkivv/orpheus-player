@@ -3,7 +3,14 @@ import { ref } from "vue";
 import UserPreferences from "../../interfaces/user-preferences";
 import { getFileDirPath, loadUserPreferences } from "../../helpers/functions";
 import { styleMappings } from "../../helpers/style-mappings";
-import { autumnTheme, defaultTheme, midnightTheme, navyTheme } from "../../helpers/color-themes";
+import {
+  autumnTheme,
+  defaultTheme,
+  embersTheme,
+  lightTheme,
+  midnightTheme,
+  navyTheme,
+} from "../../helpers/color-themes";
 
 const root = document.documentElement;
 const rootStyles = getComputedStyle(root);
@@ -58,6 +65,12 @@ const applyColorTheme = (name: string) => {
     case "navy":
       preferences.value.colors = structuredClone(navyTheme.colors);
       break;
+    case "light":
+      preferences.value.colors = structuredClone(lightTheme.colors);
+      break;
+    case "embers":
+      preferences.value.colors = structuredClone(embersTheme.colors);
+      break;
     default:
       break;
   }
@@ -80,6 +93,8 @@ const applyColorTheme = (name: string) => {
     <div class="color-preset" @click="applyColorTheme('midnight')">Midnight</div>
     <div class="color-preset" @click="applyColorTheme('autumn')">Autumn</div>
     <div class="color-preset" @click="applyColorTheme('navy')">Navy</div>
+    <div class="color-preset" @click="applyColorTheme('light')">Light</div>
+    <div class="color-preset" @click="applyColorTheme('embers')">Embers</div>
     <h4>Main colors</h4>
     <div class="color-input-group">
       <div class="color-input" id="bg-color-picker">

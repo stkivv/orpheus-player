@@ -79,3 +79,43 @@ export const navyTheme = {
     },
   },
 } as UserPreferences;
+
+export const lightTheme = {
+  colors: {
+    songList: {
+      bg: "#f4e8c2",
+      highlight: "#f6f2e5",
+      font: "#7a4a0d",
+      scrollbar: "rgba(190, 190, 190, 0.25)",
+    },
+    controlPanel: {
+      bg: "#b9884a",
+      icon: "#f4e8c2",
+      iconHighlight: "#f6f2e5",
+      timelineBg: "#f4e8c2",
+      timelineFilled: "#db810e",
+      font: "#f4e8c2",
+      toggleEnabled: "white",
+    },
+  },
+} as UserPreferences;
+
+export const embersTheme = {
+  colors: {
+    songList: {
+      bg: "#1f313b",
+      highlight: "#383852",
+      font: "#be4039",
+      scrollbar: "rgba(0, 0, 0, 0.25)",
+    },
+    controlPanel: {
+      bg: "linear-gradient(to bottom right, #be4039, #784259, #383852)",
+      icon: "#1f313b",
+      iconHighlight: "#383852",
+      timelineBg: "#683536",
+      timelineFilled: "#be4039",
+      font: "#1f313b",
+      toggleEnabled: "be4039",
+    },
+  },
+} as UserPreferences;
