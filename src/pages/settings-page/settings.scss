@@ -13,7 +13,7 @@
     padding: 10px 16px 10px 16px;
     margin: 10px;
     border-radius: 24px;
-    background-color: var(--song-list-bg-highlight);
+    background-color: var(--track-list-bg-highlight);
     text-align: center;
 
     &:hover {
@@ -51,7 +51,7 @@
 
   .color-preset {
     padding: 10px;
-    background-color: var(--song-list-bg-highlight);
+    background-color: var(--track-list-bg-highlight);
     display: inline-block;
     margin: 5px;
     border-radius: 6px;

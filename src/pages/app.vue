@@ -1,9 +1,9 @@
 <script setup>
-import Main from './main/main.vue'
+import Root from './root/root.vue'
 </script>
 
 <template>
-  <Main></Main>
+  <Root></Root>
 </template>
 
 <style>

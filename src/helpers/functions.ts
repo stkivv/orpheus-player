@@ -4,10 +4,10 @@ import { styleMappings } from "./style-mappings";
 export const loadUserPreferences = () => {
   const preferences = getPreferencesFromLocalStorage();
   if (preferences == undefined) return;
-  const songListOptions = preferences?.colors?.songList;
+  const trackListOptions = preferences?.colors?.trackList;
   const controlPanelOptions = preferences?.colors?.controlPanel;
 
-  applyStyles(songListOptions, styleMappings.colors.songList);
+  applyStyles(trackListOptions, styleMappings.colors.trackList);
   applyStyles(controlPanelOptions, styleMappings.colors.controlPanel);
 };
 

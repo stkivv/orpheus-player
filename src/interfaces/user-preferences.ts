@@ -1,7 +1,7 @@
 export default interface UserPreferences {
   fileDirPath: string | undefined;
   colors: {
-    songList: {
+    trackList: {
       bg: string | undefined;
       highlight: string | undefined;
       font: string | undefined;

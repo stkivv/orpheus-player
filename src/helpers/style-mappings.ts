@@ -3,11 +3,11 @@ import UserPreferences from "../interfaces/user-preferences";
 // maps values in the UserPreferences interface to corresponding CSS variables.
 export const styleMappings = {
   colors: {
-    songList: {
-      bg: "--song-list-bg",
-      highlight: "--song-list-bg-highlight",
-      font: "--song-list-font-col",
-      scrollbar: "--song-list-scrollbar",
+    trackList: {
+      bg: "--track-list-bg",
+      highlight: "--track-list-bg-highlight",
+      font: "--track-list-font-col",
+      scrollbar: "--track-list-scrollbar",
     },
     controlPanel: {
       bg: "--control-panel-bg",

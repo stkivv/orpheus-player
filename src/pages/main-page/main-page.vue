@@ -2,20 +2,20 @@
 import { ref, onMounted } from "vue";
 import { getFileDirPath } from "../../helpers/functions";
 
-interface Song {
+interface Track {
   name: string;
   data: string;
 }
 
-let songs = ref([] as Song[]);
+let tracks = ref([] as Track[]);
 let isLoading = true;
 const shuffleEnabled = ref(false);
 const loopEnabled = ref(false);
-const currentSong = ref<null | Song>(null);
+const currentTrack = ref<null | Track>(null);
 let audioPlayer: HTMLMediaElement | null = null;
 const currentTime = ref<string>("0:00");
 const currentDuration = ref<string>("0:00");
-const songHistory = [] as Song[];
+const trackHistory = [] as Track[];
 const barFilledPercent = ref(0);
 
 const tooltipTime = ref<string>("0:00");
@@ -23,7 +23,7 @@ const tooltipVisible = ref(false);
 const tooltipPosition = ref({ x: 0, y: 0 });
 
 onMounted(() => {
-  loadSongs();
+  loadTracks();
   audioPlayer = document.getElementById("audioPlayer") as HTMLMediaElement;
   if (audioPlayer) {
     audioPlayer.addEventListener("timeupdate", updateTime);
@@ -31,11 +31,11 @@ onMounted(() => {
   }
 });
 
-const loadSongs = async () => {
+const loadTracks = async () => {
   const path = getFileDirPath();
   //@ts-ignore
-  songs.value = await window.api.getSongs(path);
-  songs.value.forEach((s) => {
+  tracks.value = await window.api.getTracks(path);
+  tracks.value.forEach((s) => {
     if (s.name.slice(-4) == ".mp3") {
       s.name = s.name.substring(0, s.name.length - 4);
     }
@@ -43,9 +43,9 @@ const loadSongs = async () => {
   isLoading = false;
 };
 
-const playSong = async (song: Song, addToHistory = true) => {
+const playTrack = async (track: Track, addToHistory = true) => {
   if (!audioPlayer) return;
-  const blob = new Blob([song.data], { type: "audio/mpeg" });
+  const blob = new Blob([track.data], { type: "audio/mpeg" });
   const url = URL.createObjectURL(blob);
 
   const audioSource = document.getElementById("audioSource") as HTMLSourceElement;
@@ -54,15 +54,15 @@ const playSong = async (song: Song, addToHistory = true) => {
   await audioPlayer.play();
 
   currentDuration.value = formatSecondsToMinutes(audioPlayer.duration);
-  if (addToHistory && currentSong.value !== song) {
-    songHistory.push(song);
+  if (addToHistory && currentTrack.value !== track) {
+    trackHistory.push(track);
   }
 
   audioPlayer.onloadeddata = () => {
     URL.revokeObjectURL(url);
   };
 
-  currentSong.value = song;
+  currentTrack.value = track;
 };
 
 const pauseUnpause = () => {
@@ -88,34 +88,34 @@ const getBarFilledPercentage = (current: number, total: number) => {
 };
 
 const skipBack = () => {
-  songHistory.pop();
-  songHistory.length >= 1 ? playSong(songHistory[songHistory.length - 1], false) : skipForward();
+  trackHistory.pop();
+  trackHistory.length >= 1 ? playTrack(trackHistory[trackHistory.length - 1], false) : skipForward();
 };
 
 const skipForward = () => {
-  if (!audioPlayer || songs.value.length === 0) return;
+  if (!audioPlayer || tracks.value.length === 0) return;
   //loop
-  if (loopEnabled.value && currentSong.value) {
-    playSong(currentSong.value, false);
+  if (loopEnabled.value && currentTrack.value) {
+    playTrack(currentTrack.value, false);
     return;
   }
   //shuffle
   if (shuffleEnabled.value) {
-    const randIndex = Math.floor(Math.random() * songs.value.length);
-    playSong(songs.value[randIndex]);
+    const randIndex = Math.floor(Math.random() * tracks.value.length);
+    playTrack(tracks.value[randIndex]);
     return;
   }
   //no loop no shuffle
-  if (!currentSong.value) {
-    playSong(songs.value[0]);
+  if (!currentTrack.value) {
+    playTrack(tracks.value[0]);
     return;
   }
-  const index = songs.value.findIndex((song) => song === currentSong.value);
-  if (index + 1 > songs.value.length - 1) {
-    playSong(songs.value[0]);
+  const index = tracks.value.findIndex((track) => track === currentTrack.value);
+  if (index + 1 > tracks.value.length - 1) {
+    playTrack(tracks.value[0]);
     return;
   }
-  playSong(songs.value[index + 1]);
+  playTrack(tracks.value[index + 1]);
 };
 
 const toggleShuffle = () => {
@@ -157,11 +157,11 @@ const getTimeInSeconds = (event: MouseEvent) => {
   <audio id="audioPlayer">
     <source id="audioSource" src="" type="audio/mpeg" />
   </audio>
-  <div class="songlist">
-    <div class="empty-warning" v-if="songs.length == 0 && !isLoading">No files found at current source :(</div>
+  <div class="tracklist">
+    <div class="empty-warning" v-if="tracks.length == 0 && !isLoading">No files found at current source :(</div>
     <div class="loader-wrapper" v-if="isLoading"><span class="loader"></span></div>
-    <div v-for="(song, index) in songs" class="song-card" @click="playSong(song)">
-      <span class="song-index">{{ index + 1 + "." }}</span> <span class="song-label">{{ song.name }}</span>
+    <div v-for="(track, index) in tracks" class="track-card" @click="playTrack(track)">
+      <span class="track-index">{{ index + 1 + "." }}</span> <span class="track-label">{{ track.name }}</span>
     </div>
   </div>
   <div class="control-panel">
@@ -175,7 +175,7 @@ const getTimeInSeconds = (event: MouseEvent) => {
       </div>
       <div class="content">
         <div class="content__title">
-          {{ currentSong ? currentSong.name : "No current song" }}
+          {{ currentTrack ? currentTrack.name : "No track selected" }}
         </div>
         <div class="content__buttons">
           <div class="content__buttons__back" @click="skipBack">
@@ -269,6 +269,6 @@ const getTimeInSeconds = (event: MouseEvent) => {
 </template>
 
 <style>
-@import "./song-list.scss";
+@import "./track-list.scss";
 @import "./control-panel.scss";
 </style>

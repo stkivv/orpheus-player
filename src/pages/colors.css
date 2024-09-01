@@ -1,8 +1,8 @@
 :root {
-  --song-list-bg: #4c3f52;
-  --song-list-bg-highlight: #5f4f67;
-  --song-list-font-col: white;
-  --song-list-scrollbar: rgba(0, 0, 0, 0.25);
+  --track-list-bg: #4c3f52;
+  --track-list-bg-highlight: #5f4f67;
+  --track-list-font-col: white;
+  --track-list-scrollbar: rgba(0, 0, 0, 0.25);
 
   --control-panel-bg: linear-gradient(to bottom, #582da7, #d76d77, #ffaf7b);
   --control-panel-icon: #273b4a;

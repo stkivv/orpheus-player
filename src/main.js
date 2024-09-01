@@ -57,7 +57,7 @@ app.on("window-all-closed", () => {
   }
 });
 
-ipcMain.handle("get/songs", async (event, dir) => {
+ipcMain.handle("get/tracks", async (event, dir) => {
   if (dir == undefined) return [];
   try {
     const fileNames = await fs.readdir(dir);

@@ -2,11 +2,11 @@ import { createApp } from "vue";
 import App from "./pages/app.vue";
 import { createMemoryHistory, createRouter } from "vue-router";
 
-import songsPage from "./pages/songs-page/songs-page.vue";
+import main from "./pages/main-page/main-page.vue";
 import settings from "./pages/settings-page/settings.vue";
 
 const routes = [
-  { path: "/", component: songsPage },
+  { path: "/", component: main },
   { path: "/settings", component: settings },
 ];
 

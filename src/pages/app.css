@@ -7,8 +7,8 @@ html {
 }
 
 body {
-  background-color: var(--song-list-bg);
-  color: var(--song-list-font-col);
+  background-color: var(--track-list-bg);
+  color: var(--track-list-font-col);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   height: 100%;
   width: 100%;
@@ -16,7 +16,7 @@ body {
 }
 
 main {
-  background-color: var(--song-list-bg);
+  background-color: var(--track-list-bg);
 }
 
 ::-webkit-scrollbar {
@@ -25,6 +25,6 @@ main {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--song-list-scrollbar);
+  background-color: var(--track-list-scrollbar);
   -webkit-border-radius: 1ex;
 }

@@ -2,7 +2,7 @@ import UserPreferences from "../interfaces/user-preferences";
 
 export const defaultTheme = {
   colors: {
-    songList: {
+    trackList: {
       bg: "#4c3f52",
       highlight: "#5f4f67",
       font: "white",
@@ -22,7 +22,7 @@ export const defaultTheme = {
 
 export const midnightTheme = {
   colors: {
-    songList: {
+    trackList: {
       bg: "#1d1e1f",
       highlight: "#343436",
       font: "whitesmoke",
@@ -42,7 +42,7 @@ export const midnightTheme = {
 
 export const autumnTheme = {
   colors: {
-    songList: {
+    trackList: {
       bg: "#1e3226",
       highlight: "#2f4638",
       font: "#fbedc3",
@@ -62,7 +62,7 @@ export const autumnTheme = {
 
 export const navyTheme = {
   colors: {
-    songList: {
+    trackList: {
       bg: "#2f4156",
       highlight: "#3d546e",
       font: "#f5efeb",
@@ -82,7 +82,7 @@ export const navyTheme = {
 
 export const lightTheme = {
   colors: {
-    songList: {
+    trackList: {
       bg: "#f4e8c2",
       highlight: "#f6f2e5",
       font: "#7a4a0d",
@@ -102,7 +102,7 @@ export const lightTheme = {
 
 export const embersTheme = {
   colors: {
-    songList: {
+    trackList: {
       bg: "#1f313b",
       highlight: "#383852",
       font: "#be4039",

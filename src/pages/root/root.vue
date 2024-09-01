@@ -11,5 +11,5 @@ loadUserPreferences();
 </template>
 
 <style>
-@import "./main.scss";
+@import "./root.scss";
 </style>

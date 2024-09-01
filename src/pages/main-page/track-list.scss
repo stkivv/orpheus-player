@@ -1,4 +1,4 @@
-.songlist {
+.tracklist {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -35,7 +35,7 @@
     }
   }
 
-  .song-card {
+  .track-card {
     padding: 10px;
     margin: 10px;
     min-height: 40px;
@@ -44,14 +44,14 @@
     display: grid;
     grid-template-columns: 30px auto;
 
-    .song-index,
-    .song-label {
+    .track-index,
+    .track-label {
       display: flex;
       align-items: center;
     }
 
     &:hover {
-      background-color: var(--song-list-bg-highlight);
+      background-color: var(--track-list-bg-highlight);
       cursor: pointer;
     }
   }

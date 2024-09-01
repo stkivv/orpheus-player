@@ -17,7 +17,7 @@ const rootStyles = getComputedStyle(root);
 
 const preferences = ref({
   colors: {
-    songList: { bg: "", highlight: "", font: "", scrollbar: "" },
+    trackList: { bg: "", highlight: "", font: "", scrollbar: "" },
     controlPanel: {
       bg: "",
       icon: "",
@@ -38,7 +38,7 @@ const getColors = (obj, mappings) => {
   });
 };
 
-getColors(preferences.value.colors.songList, styleMappings.colors.songList);
+getColors(preferences.value.colors.trackList, styleMappings.colors.trackList);
 getColors(preferences.value.colors.controlPanel, styleMappings.colors.controlPanel);
 preferences.value.fileDirPath = getFileDirPath();
 
@@ -99,23 +99,23 @@ const applyColorTheme = (name: string) => {
     <div class="color-input-group">
       <div class="color-input" id="bg-color-picker">
         <span>background color: </span>
-        <div class="color-preview" :style="{ 'background-color': preferences.colors.songList.bg }"></div>
-        <input v-model="preferences.colors.songList.bg" />
+        <div class="color-preview" :style="{ 'background-color': preferences.colors.trackList.bg }"></div>
+        <input v-model="preferences.colors.trackList.bg" />
       </div>
       <div class="color-input" id="highlight-color-picker">
         <span>highlight color: </span>
-        <div class="color-preview" :style="{ 'background-color': preferences.colors.songList.highlight }"></div>
-        <input v-model="preferences.colors.songList.highlight" />
+        <div class="color-preview" :style="{ 'background-color': preferences.colors.trackList.highlight }"></div>
+        <input v-model="preferences.colors.trackList.highlight" />
       </div>
       <div class="color-input" id="font-color-picker">
         <span>font color: </span>
-        <div class="color-preview" :style="{ 'background-color': preferences.colors.songList.font }"></div>
-        <input v-model="preferences.colors.songList.font" />
+        <div class="color-preview" :style="{ 'background-color': preferences.colors.trackList.font }"></div>
+        <input v-model="preferences.colors.trackList.font" />
       </div>
       <div class="color-input" id="scrollbar-color-picker">
         <span>scrollbar color: </span>
-        <div class="color-preview" :style="{ 'background-color': preferences.colors.songList.scrollbar }"></div>
-        <input v-model="preferences.colors.songList.scrollbar" />
+        <div class="color-preview" :style="{ 'background-color': preferences.colors.trackList.scrollbar }"></div>
+        <input v-model="preferences.colors.trackList.scrollbar" />
       </div>
 
       <h4>Control panel</h4>
@@ -140,12 +140,12 @@ const applyColorTheme = (name: string) => {
         <input v-model="preferences.colors.controlPanel.toggleEnabled" />
       </div>
       <div class="color-input" id="timeline-empty-color-picker">
-        <span>song timeline empty color:</span>
+        <span>track timeline empty color:</span>
         <div class="color-preview" :style="{ 'background-color': preferences.colors.controlPanel.timelineBg }"></div>
         <input v-model="preferences.colors.controlPanel.timelineBg" />
       </div>
       <div class="color-input" id="timeline-filled-color-picker">
-        <span>song timeline filled color:</span>
+        <span>track timeline filled color:</span>
         <div
           class="color-preview"
           :style="{ 'background-color': preferences.colors.controlPanel.timelineFilled }"
