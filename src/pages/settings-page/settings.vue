@@ -3,6 +3,7 @@ import { ref } from "vue";
 import UserPreferences from "../../interfaces/user-preferences";
 import { getFileDirPath, loadUserPreferences } from "../../helpers/functions";
 import { styleMappings } from "../../helpers/style-mappings";
+import { useRouter } from "vue-router";
 import {
   autumnTheme,
   defaultTheme,
@@ -11,6 +12,8 @@ import {
   midnightTheme,
   navyTheme,
 } from "../../helpers/color-themes";
+
+const router = useRouter();
 
 const root = document.documentElement;
 const rootStyles = getComputedStyle(root);
@@ -164,8 +167,7 @@ const applyColorTheme = (name: string) => {
         () => {
           saveUserPreferences();
           loadUserPreferences();
-          //@ts-ignore
-          this.$router.push('/');
+          router.push('/');
         }
       "
     >

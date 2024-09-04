@@ -1,6 +1,6 @@
 {
-  "name": "my-app",
-  "productName": "my-app",
+  "name": "orpheus",
+  "productName": "Orpheus",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".vite/build/main.js",
@@ -30,7 +30,7 @@
   "keywords": [],
   "author": {
     "name": "Stefan Kivvistik",
-    "email": "stkivv@ttu.ee"
+    "email": "stefankivv@gmail.com"
   },
   "license": "MIT",
   "dependencies": {
